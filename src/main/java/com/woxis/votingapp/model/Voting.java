@@ -1,5 +1,6 @@
 package com.woxis.votingapp.model;
 
+import com.woxis.votingapp.dto.ScoreDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,11 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static com.woxis.votingapp.model.VoteOptionEnum.AGAINST;
+import static com.woxis.votingapp.model.VoteOptionEnum.FAVOR;
 
 @Entity
 @Data
@@ -26,7 +32,6 @@ public class Voting {
     private String subject;
     private LocalDate startDate;
     private LocalDate endDate;
-    private boolean ended;
     @OneToMany(mappedBy = "voting")
     private List<Vote> votes = new ArrayList<>();
 
@@ -43,11 +48,20 @@ public class Voting {
                 ", subject='" + subject + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", ended=" + ended +
                 '}';
     }
 
-    public boolean isInVotingPeriod(LocalDate now) {
+    public boolean isActive() {
+        LocalDate now = LocalDate.now();
         return (now.isAfter(startDate) || now.isEqual(startDate)) && (now.isBefore(endDate) || now.isEqual(endDate));
+    }
+
+    public boolean hasEnded() {
+        return LocalDate.now().isAfter(endDate);
+    }
+
+    public ScoreDTO calculateScore() {
+        Map<VoteOptionEnum, Long> scores = votes.stream().collect(Collectors.groupingBy(Vote::getVoteOption, Collectors.counting()));
+        return new ScoreDTO(scores.get(FAVOR), scores.get(AGAINST));
     }
 }

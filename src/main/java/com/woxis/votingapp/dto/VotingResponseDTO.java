@@ -19,5 +19,5 @@ public class VotingResponseDTO {
     private boolean ended;
     private VoteResponseDTO userVote;
     private boolean active;
-    // todo add scores
+    private ScoreDTO score;
 }
