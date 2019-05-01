@@ -18,5 +18,6 @@ public class VotingResponseDTO {
     private LocalDate endDate;
     private boolean ended;
     private VoteResponseDTO userVote;
+    private boolean active;
     // todo add scores
 }

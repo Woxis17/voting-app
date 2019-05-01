@@ -1,10 +1,10 @@
 package com.woxis.votingapp.exception;
 
-public class InvalidStateException extends RuntimeException {
+public class IllegalStateException extends RuntimeException {
 
     private String description;
 
-    public InvalidStateException(String description) {
+    public IllegalStateException(String description) {
         this.description = description;
     }
 }

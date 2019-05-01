@@ -1,6 +1,7 @@
 package com.woxis.votingapp.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Voting {
@@ -27,12 +29,6 @@ public class Voting {
     private boolean ended;
     @OneToMany(mappedBy = "voting")
     private List<Vote> votes = new ArrayList<>();
-
-    public Voting(String subject, LocalDate startDate, LocalDate endDate) {
-        this.subject = subject;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
 
     public void addVote(Vote vote) {
         vote.setVoting(this);

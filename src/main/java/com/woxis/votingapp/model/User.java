@@ -1,6 +1,7 @@
 package com.woxis.votingapp.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -33,10 +35,6 @@ public class User implements UserDetails {
     private List<Voting> votingsCreated = new ArrayList<>();
     @OneToMany(mappedBy = "votingUser")
     private List<Vote> votes = new ArrayList<>();
-
-    public User(String username) {
-        this.username = username;
-    }
 
     public void addVoting(Voting voting) {
         voting.setCreator(this);
