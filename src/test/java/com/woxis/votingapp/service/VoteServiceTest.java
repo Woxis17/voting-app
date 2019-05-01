@@ -102,8 +102,8 @@ public class VoteServiceTest {
         VoteDTO voteDTO = new VoteDTO(FAVOR);
 
         // when && then
-        voteService.vote(voteDTO, voting.getId());
         expectedException.expect(IllegalStateException.class);
+        voteService.vote(voteDTO, voting.getId());
     }
 
     @Test
@@ -118,8 +118,8 @@ public class VoteServiceTest {
         VoteDTO voteDTO = new VoteDTO(FAVOR);
 
         // when && then
-        voteService.vote(voteDTO, voting.getId());
         expectedException.expect(IllegalStateException.class);
+        voteService.vote(voteDTO, voting.getId());
     }
 
 }

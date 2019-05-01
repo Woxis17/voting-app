@@ -1,6 +1,7 @@
 package com.woxis.votingapp.service;
 
 import com.woxis.votingapp.dto.VoteDTO;
+import com.woxis.votingapp.exception.AlreadyPerformedException;
 import com.woxis.votingapp.exception.ConflictException;
 import com.woxis.votingapp.exception.NotFoundException;
 import com.woxis.votingapp.model.User;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -36,11 +38,18 @@ public class VoteService {
     public Long vote(VoteDTO voteDTO, Long votingId) {
         Vote vote = new Vote(voteDTO.getVoteOption());
 
-        User user = userRepository.findById(UserId.get()).orElseThrow(NotFoundException::new);
-        user.addVote(vote);
+        if (voteRepository.existsByVotingUserIdAndVotingId(UserId.get(), votingId)) {
+            throw new AlreadyPerformedException();
+        }
 
         Voting voting = votingRepository.findById(votingId).orElseThrow(NotFoundException::new);
+        if (!voting.isInVotingPeriod(LocalDate.now())) {
+            throw new IllegalStateException("Voting is not active anymore");
+        }
         voting.addVote(vote);
+
+        User user = userRepository.findById(UserId.get()).orElseThrow(NotFoundException::new);
+        user.addVote(vote);
 
         voteRepository.save(vote);
         return vote.getId();

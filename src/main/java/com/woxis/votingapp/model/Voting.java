@@ -46,4 +46,8 @@ public class Voting {
                 ", ended=" + ended +
                 '}';
     }
+
+    public boolean isInVotingPeriod(LocalDate now) {
+        return (now.isAfter(startDate) || now.isEqual(startDate)) && (now.isBefore(endDate) || now.isEqual(endDate));
+    }
 }
