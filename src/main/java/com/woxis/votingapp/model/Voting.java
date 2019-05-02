@@ -62,6 +62,6 @@ public class Voting {
 
     public ScoreDTO calculateScore() {
         Map<VoteOptionEnum, Long> scores = votes.stream().collect(Collectors.groupingBy(Vote::getVoteOption, Collectors.counting()));
-        return new ScoreDTO(scores.get(FAVOR), scores.get(AGAINST));
+        return new ScoreDTO(scores.getOrDefault(FAVOR, 0L), scores.getOrDefault(AGAINST, 0L));
     }
 }
