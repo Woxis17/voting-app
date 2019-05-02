@@ -56,7 +56,7 @@ public class Voting {
         return (now.isAfter(startDate) || now.isEqual(startDate)) && (now.isBefore(endDate) || now.isEqual(endDate));
     }
 
-    public boolean hasEnded() {
+    public boolean isEnded() {
         return LocalDate.now().isAfter(endDate);
     }
 

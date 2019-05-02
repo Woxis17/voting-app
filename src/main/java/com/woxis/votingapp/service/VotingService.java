@@ -60,8 +60,6 @@ public class VotingService {
 
     private VotingResponseDTO mapWithDetails(Voting voting) {
         VotingResponseDTO votingResponseDTO = votingMapper.toDto(voting);
-        votingResponseDTO.setEnded(voting.hasEnded());
-        votingResponseDTO.setActive(voting.isActive());
         voteService.getUserVote(UserId.get(), voting.getId())
                 .ifPresent(vote -> votingResponseDTO.setUserVote(voteMapper.toDto(vote)));
 

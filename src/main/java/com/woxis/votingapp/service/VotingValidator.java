@@ -23,7 +23,7 @@ public class VotingValidator {
             throw new IllegalStateException("End date must be after start date");
         }
 
-        if (endDate.isBefore(startDate.plusDays(7)) || endDate.isAfter(startDate.plusMonths(1))) {
+        if (endDate.isBefore(startDate.plusDays(6)) || endDate.isAfter(startDate.plusMonths(1))) {
             throw new IllegalStateException("Minimum time span is 1 week and maximum is 1 month");
         }
     }

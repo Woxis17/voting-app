@@ -20,7 +20,7 @@ public class VotingValidatorTest {
         VotingDTO votingDTO = VotingDTO.builder()
                 .subject("anySubject")
                 .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(7))
+                .endDate(LocalDate.now().plusDays(6))
                 .build();
 
         // when && then
@@ -61,7 +61,7 @@ public class VotingValidatorTest {
         VotingDTO votingDTO = VotingDTO.builder()
                 .subject("anySubject")
                 .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(6))
+                .endDate(LocalDate.now().plusDays(5))
                 .build();
 
         // when && then
