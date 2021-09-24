@@ -1,8 +1,8 @@
 package com.woxis.votingapp.config;
 
-
 import com.woxis.votingapp.service.UserService;
 import com.woxis.votingapp.util.UserIdFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,30 +20,30 @@ import static org.springframework.http.HttpMethod.POST;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(POST, "/users").permitAll()
-                .antMatchers("/h2-console").permitAll()
-                .anyRequest().authenticated()
-                .and().httpBasic();
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable()
+        .authorizeRequests()
+        .antMatchers(POST, "/users").permitAll()
+        .antMatchers("/h2-console").permitAll()
+        .anyRequest().authenticated()
+        .and().httpBasic();
 
-        http.addFilterAfter(new UserIdFilter(), BasicAuthenticationFilter.class);
-    }
+    http.addFilterAfter(new UserIdFilter(), BasicAuthenticationFilter.class);
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder());
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userService)
+        .passwordEncoder(passwordEncoder());
+  }
 
 }

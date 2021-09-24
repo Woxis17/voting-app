@@ -2,10 +2,10 @@ package com.woxis.votingapp.exception;
 
 public class NotFoundException extends BaseException {
 
-    public NotFoundException() {
-    }
+  public NotFoundException() {
+  }
 
-    public NotFoundException(String description) {
-        super(description);
-    }
+  public NotFoundException(String description) {
+    super(description);
+  }
 }

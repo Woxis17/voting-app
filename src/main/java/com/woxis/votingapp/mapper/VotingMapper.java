@@ -1,21 +1,19 @@
 package com.woxis.votingapp.mapper;
 
+import com.woxis.votingapp.config.MapStructConfig;
 import com.woxis.votingapp.dto.VotingDTO;
 import com.woxis.votingapp.dto.VotingResponseDTO;
 import com.woxis.votingapp.model.Voting;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = MapStructConfig.class)
 public interface VotingMapper {
 
-    VotingMapper INSTANCE = Mappers.getMapper(VotingMapper.class);
+  @Mapping(source = "creator.username", target = "creator")
+  VotingResponseDTO toDto(Voting voting);
 
-    @Mapping(source = "creator.username", target = "creator")
-    @Mapping(source = "id", target = "votingId")
-    VotingResponseDTO toDto(Voting voting);
-
-    Voting fromDto(VotingDTO votingDTO);
+  Voting fromDto(VotingDTO votingDTO);
 
 }

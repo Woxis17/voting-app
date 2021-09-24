@@ -11,7 +11,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class ErrorDTO {
 
-    private String error;
-    private String errorDescription;
+  private String error;
+  private String errorDescription;
 
 }

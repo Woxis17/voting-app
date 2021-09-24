@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ScoreDTO {
 
-    private long favor;
-    private long against;
+  private long favor;
+  private long against;
 }

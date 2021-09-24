@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Builder
 public class VotingDTO {
 
-    private String subject;
-    private LocalDate startDate;
-    private LocalDate endDate;
+  private String subject;
+  private LocalDate startDate;
+  private LocalDate endDate;
 }
