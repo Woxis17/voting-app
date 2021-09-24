@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 @Mapper(config = MapStructConfig.class)
 public interface VotingMapper {
 
+  @Mapping(source = "id", target = "votingId")
   @Mapping(source = "creator.username", target = "creator")
   VotingResponseDTO toDto(Voting voting);
 

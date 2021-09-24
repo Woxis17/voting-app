@@ -12,12 +12,10 @@ import com.woxis.votingapp.repository.VotingRepository;
 import com.woxis.votingapp.util.UserId;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -40,9 +38,9 @@ public class VotingService {
     return voting.getId();
   }
 
-  public List<VotingResponseDTO> getVotingList() {
-    List<Voting> votingList = votingRepository.findAll();
-    return votingList.stream().map(this::mapWithDetails).collect(toList());
+  public Page<VotingResponseDTO> getVotingList(Pageable pageable) {
+    Page<Voting> votingList = votingRepository.findAll(pageable);
+    return votingList.map(this::mapWithDetails);
   }
 
   private VotingResponseDTO mapWithDetails(Voting voting) {

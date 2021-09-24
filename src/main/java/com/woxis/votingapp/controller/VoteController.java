@@ -10,25 +10,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@RestController
 @Slf4j
+@RestController
+@RequestMapping("/votings")
 @RequiredArgsConstructor
 public class VoteController extends BaseExceptionHandlingController {
 
   private final VoteService voteService;
 
-  @PostMapping("/votings/{voting-id}/votes")
+  @PostMapping("/{voting-id}/votes")
   public ResponseEntity<Long> vote(@RequestBody VoteDTO voteDTO,
                                    @PathVariable(name = "voting-id") Long votingId) {
     log.info("Adding vote {} to voting with id {}", voteDTO, votingId);
     return ok(voteService.vote(voteDTO, votingId));
   }
 
-  @PutMapping("/votings/{voting-id}/votes/{vote-id}")
+  @PutMapping("/{voting-id}/votes/{vote-id}")
   public ResponseEntity<Long> changeVote(@RequestBody VoteDTO voteDTO,
                                          @PathVariable(name = "voting-id") Long votingId,
                                          @PathVariable(name = "vote-id") Long voteId) {
