@@ -6,7 +6,6 @@ import com.woxis.votingapp.dto.VoteResponseDTO;
 import com.woxis.votingapp.model.Vote;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(config = MapStructConfig.class)
 public interface VoteMapper {
