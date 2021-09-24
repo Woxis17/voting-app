@@ -30,7 +30,7 @@ public class VoteService {
     Vote vote = new Vote(voteDTO.getVoteOption());
 
     if (voteRepository.existsByVotingUserIdAndVotingId(UserId.get(), votingId)) {
-      throw new AlreadyPerformedException();
+      throw new AlreadyPerformedException("already voted");
     }
 
     Voting voting = votingRepository.findById(votingId).orElseThrow(NotFoundException::new);
@@ -40,7 +40,7 @@ public class VoteService {
     voting.addVote(vote);
 
     User user = userRepository.findById(UserId.get()).orElseThrow(NotFoundException::new);
-    user.addVote(vote);
+    vote.setVotingUser(user);
 
     voteRepository.save(vote);
     return vote.getId();
@@ -61,7 +61,7 @@ public class VoteService {
     }
   }
 
-  public Optional<Vote> getUserVote(Long userId, Long votingId) {
-    return voteRepository.findByVotingUserIdAndVotingId(userId, votingId);
+  public Optional<Vote> getUserVote(Long userId, Voting voting) {
+    return voteRepository.findByVotingUserIdAndVoting(userId, voting);
   }
 }

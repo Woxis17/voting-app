@@ -11,11 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Entity
 @Getter
@@ -32,23 +29,6 @@ public class User extends BaseEntity implements UserDetails {
   private String password;
   private String firstName;
   private String lastName;
-
-  @OneToMany(mappedBy = "creator")
-  @ToString.Exclude
-  private List<Voting> votingsCreated = new ArrayList<>();
-  @OneToMany(mappedBy = "votingUser")
-  @ToString.Exclude
-  private List<Vote> votes = new ArrayList<>();
-
-  public void addVoting(Voting voting) {
-    voting.setCreator(this);
-    votingsCreated.add(voting);
-  }
-
-  public void addVote(Vote vote) {
-    vote.setVotingUser(this);
-    votes.add(vote);
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

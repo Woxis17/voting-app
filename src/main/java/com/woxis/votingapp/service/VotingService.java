@@ -8,6 +8,7 @@ import com.woxis.votingapp.mapper.VotingMapper;
 import com.woxis.votingapp.model.User;
 import com.woxis.votingapp.model.Voting;
 import com.woxis.votingapp.repository.UserRepository;
+import com.woxis.votingapp.repository.VoteRepository;
 import com.woxis.votingapp.repository.VotingRepository;
 import com.woxis.votingapp.util.UserId;
 
@@ -28,12 +29,13 @@ public class VotingService {
   private final VoteService voteService;
   private final VotingMapper votingMapper;
   private final VoteMapper voteMapper;
+  private final VoteRepository voteRepository;
 
   public Long createVoting(VotingDTO votingDTO) {
     votingValidator.validate(votingDTO);
     Voting voting = votingMapper.fromDto(votingDTO);
     User user = userRepository.findById(UserId.get()).orElseThrow(NotFoundException::new);
-    user.addVoting(voting);
+    voting.setCreator(user);
     votingRepository.save(voting);
     return voting.getId();
   }
@@ -45,7 +47,7 @@ public class VotingService {
 
   private VotingResponseDTO mapWithDetails(Voting voting) {
     VotingResponseDTO votingResponseDTO = votingMapper.toDto(voting);
-    voteService.getUserVote(UserId.get(), voting.getId())
+    voteService.getUserVote(UserId.get(), voting)
         .ifPresent(vote -> votingResponseDTO.setUserVote(voteMapper.toDto(vote)));
 
     votingResponseDTO.setScore(voting.calculateScore());

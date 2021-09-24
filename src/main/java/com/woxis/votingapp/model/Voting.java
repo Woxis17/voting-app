@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -31,8 +32,8 @@ import static com.woxis.votingapp.model.VoteOptionEnum.FAVOR;
 @AllArgsConstructor
 public class Voting extends BaseEntity {
 
-  @ManyToOne
-  @JoinColumn(name = "CREATOR_ID")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn
   private User creator;
   private String subject;
   private LocalDate startDate;

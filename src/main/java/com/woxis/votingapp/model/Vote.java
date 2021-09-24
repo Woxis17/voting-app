@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -19,15 +21,16 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 public class Vote extends BaseEntity {
 
-  @ManyToOne
-  @JoinColumn(name = "VOTING_USER_ID")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(nullable = false, updatable = false)
   private User votingUser;
-  @ManyToOne
-  @JoinColumn(name = "VOTING_ID")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(nullable = false, updatable = false)
   private Voting voting;
 
   @Enumerated
   private VoteOptionEnum voteOption;
+  @Column
   private boolean changed;
 
   public Vote(VoteOptionEnum voteOption) {
